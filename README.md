@@ -11,7 +11,7 @@ Extensão para **Chrome e Edge (Manifest V3)** que detecta vídeos nas páginas 
 
 1. Baixe ou clone este repositório.
 2. Abra `chrome://extensions` (ou `edge://extensions`) e ative o **Modo do desenvolvedor**.
-3. Clique em **Carregar sem compactação** e selecione a pasta [`extension/`](extension/).
+3. Clique em **Carregar sem compactação** e selecione a pasta onde você baixou/clonou este repositório (a que contém o `manifest.json`).
 4. Abra uma página com vídeo, aguarde alguns segundos e use o botão sobre o vídeo ou o ícone da extensão.
 
 ## O que ela faz (e o que não faz)
@@ -22,13 +22,12 @@ Extensão para **Chrome e Edge (Manifest V3)** que detecta vídeos nas páginas 
 
 ## Estrutura
 
-- `extension/`: código-fonte da extensão (`background/`, `content/`, `downloader/`, `parsers/`, `popup/`, `offscreen/`, `utils/`) e testes em `extension/tests/`. Detalhes técnicos e histórico de mudanças em [`extension/README.md`](extension/README.md).
-- `dist/` e o `.zip` de distribuição são gerados a partir de `extension/` e não ficam no repositório.
+- Raiz do repositório: o próprio projeto da extensão (`manifest.json`, `background/`, `content/`, `downloader/`, `parsers/`, `popup/`, `offscreen/`, `utils/`, `icons/`) e os testes em `tests/`. Detalhes técnicos e histórico de mudanças em [`docs/DETALHES_TECNICOS.md`](docs/DETALHES_TECNICOS.md).
+- `dist/` e o `.zip` de distribuição são gerados a partir deste projeto e não ficam no repositório.
 
 ## Testes
 
 ```bash
-cd extension
 npm install
 npm test          # testes unitários (Node.js)
 npm run test:e2e  # testes ponta a ponta (Playwright)

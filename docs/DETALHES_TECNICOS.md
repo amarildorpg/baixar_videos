@@ -9,7 +9,7 @@ baixá-los na melhor qualidade disponível. Este é o **MVP** descrito na
 1. Abra `chrome://extensions` (funciona também no Edge, em `edge://extensions`).
 2. Ative o **Modo do desenvolvedor** (canto superior direito).
 3. Clique em **Carregar sem compactação**.
-4. Selecione a pasta `extension/` (esta pasta).
+4. Selecione a raiz do repositório.
 5. Abra uma página com vídeo, aguarde alguns segundos e clique no ícone da
    extensão.
 

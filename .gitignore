@@ -1,4 +1,5 @@
-# Saidas de build/empacotamento (geradas a partir de extension/)
-dist/
+# Saidas de build/empacotamento (geradas a partir deste projeto)
 *.zip
+dist/
 node_modules/
+tests/e2e/.run/
