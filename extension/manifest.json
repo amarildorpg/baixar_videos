@@ -1,0 +1,41 @@
+{
+  "manifest_version": 3,
+  "name": "Video Downloader — Detector de Vídeos",
+  "version": "0.1.0",
+  "description": "Detecta vídeos em páginas (MP4, WebM, HLS, DASH) e permite baixar na melhor qualidade disponível. Não processa conteúdo protegido por DRM.",
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "Video Downloader"
+  },
+  "background": {
+    "service_worker": "background/service-worker.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content/overlay-ui.js", "content/video-detector.js"],
+      "run_at": "document_idle",
+      "all_frames": true
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content/page-hook.js"],
+      "run_at": "document_start",
+      "all_frames": true,
+      "world": "MAIN"
+    }
+  ],
+  "permissions": [
+    "downloads",
+    "storage",
+    "tabs",
+    "webRequest",
+    "scripting",
+    "activeTab",
+    "offscreen"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ]
+}

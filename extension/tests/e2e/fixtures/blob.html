@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Teste MediaSource (estilo Instagram/feed adaptativo)</title></head>
+<body>
+  <h1>Player via MediaSource (blob:) — sem login, como um feed real</h1>
+  <video id="v" autoplay muted loop playsinline width="360" height="640"></video>
+  <div id="status">carregando...</div>
+  <script>
+    const MIME = 'video/mp4; codecs="avc1.42E01E, mp4a.40.2"';
+    async function run() {
+      const video = document.getElementById('v');
+      const ms = new MediaSource();
+      video.src = URL.createObjectURL(ms);
+      await new Promise((resolve) => ms.addEventListener('sourceopen', resolve, { once: true }));
+      const sb = ms.addSourceBuffer(MIME);
+      const resp = await fetch('/blob-source.mp4');
+      const buf = await resp.arrayBuffer();
+      const total = buf.byteLength;
+      const chunkSize = Math.ceil(total / 4);
+      for (let offset = 0; offset < total; offset += chunkSize) {
+        const chunk = buf.slice(offset, Math.min(offset + chunkSize, total));
+        await new Promise((resolve, reject) => {
+          sb.addEventListener('updateend', resolve, { once: true });
+          sb.addEventListener('error', reject, { once: true });
+          sb.appendBuffer(chunk);
+        });
+      }
+      ms.endOfStream();
+      document.getElementById('status').textContent = 'pronto (' + total + ' bytes)';
+      video.play().catch(() => {});
+    }
+    run().catch((err) => {
+      document.getElementById('status').textContent = 'erro: ' + err;
+      console.error(err);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Feed de demonstração (estilo Instagram)</title>
+<meta property="og:title" content="Feed de demonstração">
+<style>
+  body { background:#000; margin:0; font-family: sans-serif; }
+  .feed { display:flex; flex-direction:column; gap:24px; padding:24px; align-items:center; }
+  .card { width:360px; }
+  video { width:360px; height:640px; background:#111; object-fit:cover; }
+  h1 { color:#fff; text-align:center; font-size:16px; }
+</style>
+</head>
+<body>
+  <h1>Feed de demonstração — 3 vídeos autoplay (sem login)</h1>
+  <div class="feed">
+    <div class="card"><video class="v" autoplay muted loop playsinline
+      src="/cdn/feed1.mp4?token=AAA111&oe=111&oh=xxx"></video></div>
+    <div class="card"><video class="v" autoplay muted loop playsinline
+      src="/cdn/feed2.mp4?token=BBB222&oe=222&oh=yyy"></video></div>
+    <div class="card"><video class="v" autoplay muted loop playsinline
+      src="/cdn/feed3.mp4?token=CCC333&oe=333&oh=zzz"></video></div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,4 @@
+# Saidas de build/empacotamento (geradas a partir de extension/)
+dist/
+*.zip
+node_modules/

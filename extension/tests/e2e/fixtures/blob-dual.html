@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Teste MediaSource dual (vídeo e áudio em SourceBuffers separados, estilo YouTube)</title></head>
+<body>
+  <h1>Player com SourceBuffer de vídeo e de áudio SEPARADOS</h1>
+  <video id="v" autoplay muted loop playsinline width="360" height="640"></video>
+  <div id="status">carregando...</div>
+  <script>
+    async function appendAll(sb, buf) {
+      const total = buf.byteLength;
+      const chunkSize = Math.ceil(total / 3);
+      for (let offset = 0; offset < total; offset += chunkSize) {
+        const chunk = buf.slice(offset, Math.min(offset + chunkSize, total));
+        await new Promise((resolve, reject) => {
+          sb.addEventListener('updateend', resolve, { once: true });
+          sb.addEventListener('error', reject, { once: true });
+          sb.appendBuffer(chunk);
+        });
+      }
+    }
+
+    async function run() {
+      const video = document.getElementById('v');
+      const ms = new MediaSource();
+      video.src = URL.createObjectURL(ms);
+      await new Promise((resolve) => ms.addEventListener('sourceopen', resolve, { once: true }));
+
+      // Dois SourceBuffers independentes — vídeo sem áudio embutido, áudio
+      // sem vídeo — exatamente como YouTube (e muitos outros players
+      // adaptativos) entregam mídia via MSE.
+      const videoSb = ms.addSourceBuffer('video/mp4; codecs="avc1.42E01E"');
+      const audioSb = ms.addSourceBuffer('audio/mp4; codecs="mp4a.40.2"');
+
+      const [videoBuf, audioBuf] = await Promise.all([
+        fetch('/blob-video-only.mp4').then((r) => r.arrayBuffer()),
+        fetch('/blob-audio-only.mp4').then((r) => r.arrayBuffer()),
+      ]);
+
+      await appendAll(videoSb, videoBuf);
+      await appendAll(audioSb, audioBuf);
+      ms.endOfStream();
+
+      document.getElementById('status').textContent =
+        'pronto (video=' + videoBuf.byteLength + ' audio=' + audioBuf.byteLength + ')';
+      video.play().catch(() => {});
+    }
+    run().catch((err) => {
+      document.getElementById('status').textContent = 'erro: ' + err;
+      console.error(err);
+    });
+  </script>
+</body>
+</html>

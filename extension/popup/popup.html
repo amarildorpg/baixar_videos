@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <title>Video Downloader</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="header-title">
+      <span class="logo">▶</span>
+      <span>Video Downloader</span>
+    </div>
+    <div id="count" class="count">Vídeos encontrados: 0</div>
+  </header>
+
+  <main id="content" class="content">
+    <div class="loading">Analisando página…</div>
+  </main>
+
+  <footer class="footer">
+    <label class="debug-toggle">
+      <input type="checkbox" id="debugToggle" />
+      <span>Logs de depuração</span>
+    </label>
+  </footer>
+
+  <script src="popup.js"></script>
+</body>
+</html>

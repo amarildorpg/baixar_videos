@@ -1,0 +1,13 @@
+{
+  "private": true,
+  "type": "module",
+  "description": "Não é usado pelo Chrome (extensões não leem package.json). Presente apenas para permitir rodar os testes em tests/ com Node.js, pois os módulos usam import/export ES.",
+  "scripts": {
+    "test": "node tests/run-all.mjs",
+    "test:e2e": "node tests/e2e/run.mjs",
+    "test:all": "npm run test && npm run test:e2e"
+  },
+  "devDependencies": {
+    "playwright": "^1.63.0"
+  }
+}
